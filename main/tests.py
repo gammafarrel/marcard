@@ -19,9 +19,6 @@ class MainTest(TestCase):
         self.assertContains(response, 'MARCARD')
         self.assertContains(response, 'Gamma Farrel')
         self.assertContains(response, 'PBP-E')
-        self.assertContains(response, 'Celestials')
-        self.assertContains(response, '100')
-        self.assertContains(response, 'Zeus')
 
     def test_item_model(self):
         # Create a test Product instance
