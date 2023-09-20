@@ -10,11 +10,16 @@ from django.core import serializers
 
 def show_main(request):
     products = Product.objects.all()
+    counter = 0
+    
+    for product in products:
+        counter += 1
 
     context = {
         'name': 'Gamma Farrel', 
         'class': 'PBP E', 
-        'products': products
+        'products': products,
+        'items' : counter,
     }
 
     return render(request, "main.html", context)
