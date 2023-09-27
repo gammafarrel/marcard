@@ -154,4 +154,52 @@
         3. Mengakses data pada sesi
         4. Menghapus data
     
-    4. Tentunya terdapat beberapa masalah yang dapat muncul dengan penggunaan Cookies
+    4. Tentunya terdapat beberapa masalah yang dapat muncul dengan penggunaan Cookies, antara lain :
+
+        1. Resiko privasi pengguna yang akan terancam akibat adanya pelacakan aktivitas pengguna di web.
+        2. Adanya kerentanan terhadap serangan Cross-Site Request Forgery atau CSRF yaitu ancaman serangan dimana penyerang dapat memaksakan pengguna untuk melakukan tindakan tanpa sepngetahuan pengguna
+        3. Penyimpanan data yang tidak aman dapat terjadi ketika cookies mengandung data sensitif dan tidak diekripsi secara tepat
+
+    5. Penerapan Checklist
+        1. Membuat Form
+
+            Langkah pertama yaitu melakukan import form dari template yang disediakan oleh Django lalu menambahkan fungsi pembuatan form tersebut agar form dapat dijalankan.
+
+            Perlu dibuat juga sebuah templates untuk menampilkan laman register.
+
+            Lakukan penautan urls pada main agar fitur dapat berjalan
+        
+        2. Login dan Logout
+
+            Untuk membuat fitur login dan logout, perlu dibuat sebuah fungsi untuk keduanya pada views.py, lakukan pula import login dan logout agar dapat berjalan.
+
+            Lakukan penautan urls kembali agar fitur dapat berjalan.
+
+        3. Restriksi halaman
+
+            Agar pengguna yang dapat masuk ke aplikasi hanya pengguna yang terotentiikasi, lakukan sebuah import untuk login_required dan tambahkan kode @login_required sebelum menjalankan fungsi lainnya agar pengguna hanya dapat mengakses ketika sudah login.
+
+        4. Data pada Cookies
+        
+            Untuk melihat last login pengguna, dapat digunakan cookies. Lakukan penambahan kode fungsi login dimana ketika user bukan none maka dia akan melakukan tracking terhadap waktu terakhir login pengguna.
+
+            Tambahkan pula pada context variable dari tracking tersebut (misal last_login).
+
+            Pada fungsi logout, tambahkan delet_cookies untuk menghapus cookie last_login pengguna dikala logout.
+
+            Lakukan penambahan kode pada templates agar last_login muncul pada aplikasi.
+
+        5. Menghubungkan antara Product dan User
+
+            Lakukan penambahan import pada models.py yaitu User, dan penambahan pada class Product yaitu model user.
+
+            Pada view.py di main, tambahkan kode agar Django tidak langsung menyimpan objek yang telah dibuat pada form langsung ke database sehingga pengguna masih bisa melakukan perubahan pada object sebelum disimpan.
+
+            Tambahkan pula kode untuk menampilkan object produk khusus pengguna. 
+
+            (
+                products = Product.objects.filter(user=request.user)
+            )
+
+            Kode ini memungkinkan pengguna hanya dapat melihat produk yang telah dia isi saja.
+
