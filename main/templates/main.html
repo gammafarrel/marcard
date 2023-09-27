@@ -9,7 +9,7 @@
     <h5>Class:</h5>
     <p>{{class}}</p>
 
-    <h9>Kamu menyimpan {{items}} item pada aplikasi ini</h9>
+    <!-- <h9>Kamu menyimpan {{items}} item pada aplikasi ini</h9>  -->
 
     <table>
       <tr>
@@ -36,6 +36,14 @@
   <a href="{% url 'main:create_product' %}">
       <button>
           Add New Product
+      </button>
+  </a>
+
+  <h5>Sesi terakhir login: {{ last_login }}</h5>
+
+  <a href="{% url 'main:logout' %}">
+      <button>
+          Logout
       </button>
   </a>
 
