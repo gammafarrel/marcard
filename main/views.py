@@ -47,6 +47,19 @@ def create_product(request):
     context = {'form': form}
     return render(request, "create_product.html", context)
 
+def increment_stock(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    product.price += 1
+    product.save()
+    return redirect('main:show_main')
+
+def decrement_stock(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    if product.price > 0:
+        product.price -= 1
+        product.save()
+    return redirect('main:show_main')
+
 def show_xml(request):
     data = Product.objects.all()
 
