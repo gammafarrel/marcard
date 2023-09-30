@@ -1,63 +1,18 @@
-{% extends 'base.html' %}
+<h1>Welcome to {{ title }}</h1>
 
-{% block content %}
-    <h1>Marcard Page</h1>
+<h3>Organize your card here!</h3>
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+<h5>By : {{ name }}, {{ class }}</h5>
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
-
-    <!-- <h9>Kamu menyimpan {{items}} item pada aplikasi ini</h9>  -->
-
-    <table>
-      <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Date Added</th>
-      </tr>
-  
-      {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
-  
-      {% for product in products %}
-          <tr>
-              <td>{{product.name}}</td>
-              <td>{{product.price}}</td>
-              <td>{{product.description}}</td>
-              <td>{{product.date_added}}</td>
-              <td>
-                <!-- Untuk menambah stok -->
-                <form method="POST" action="{% url 'main:increment_stock' product.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Tambah Harga</button>
-                </form>
-
-                <!-- Untuk mengurangi stok -->
-                <form method="POST" action="{% url 'main:decrement_stock' product.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Kurangi Harga</button>
-                </form>
-              </td>
-          </tr>
-      {% endfor %}
+<table>
+    <tr>
+      <th>Type</th>
+      <th>Card Name</th>
+      <th>Power</th>
+    </tr>
+    <tr>
+      <td>{{ type }}</td>
+      <td>{{ description }}</td>
+      <td>{{ power }}</td>
+    </tr>
   </table>
-  
-  <br />
-  
-  <a href="{% url 'main:create_product' %}">
-      <button>
-          Add New Product
-      </button>
-  </a>
-
-  <h5>Sesi terakhir login: {{ last_login }}</h5>
-
-  <a href="{% url 'main:logout' %}">
-      <button>
-          Logout
-      </button>
-  </a>
-
-{% endblock content %}

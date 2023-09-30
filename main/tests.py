@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from main.models import Product
+from main.models import Item
 
 class MainTest(TestCase):
     def setUp(self):
@@ -22,13 +22,13 @@ class MainTest(TestCase):
 
     def test_item_model(self):
         # Create a test Product instance
-        product = Product.objects.create(
+        product = Item.objects.create(
             name='Test Product',
             description='Test description',
             amount='20',
         )
         # Query the database to check if the product was created
-        saved_product = Product.objects.get(id=product.id)
+        saved_product = Item.objects.get(id=product.id)
         self.assertEqual(saved_product.name, 'Test Product')
 
     def test_invalid_main_url_returns_404(self):
