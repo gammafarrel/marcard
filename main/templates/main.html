@@ -1,63 +1,135 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Marcard Page</h1>
+    <style>
+        body {
+            background-color: #16191c;
+        }
+    </style>
+    <style>
+        table.table thead tr td:first{
+            background-color: rgb(202, 255, 136);
+            color: black;
+        }
+    </style>
+    
+    <style>
+        table.table tbody tr:last-child td{
+            background-color: rgb(19, 7, 73);
+            color: white;
+        }
+    </style>
+    
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Marcard</span>
+        <div class="d-flex justify-content-end">
+        <form>
+        <a href="{% url 'main:logout' %}">
+        <button class="btn btn-outline-success me-2" type="button">Logout</button>
+        </a>
+        </form>
+    </div>
+    </nav>
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mx-auto mt-3">
+                    <div class="card-body text-center">
+                        <p class="card-text">Hello! Nice to see you {{ name }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- <h9>Kamu menyimpan {{items}} item pada aplikasi ini</h9>  -->
-
-    <table>
-      <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Date Added</th>
-      </tr>
-  
-      {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
-  
-      {% for product in products %}
-          <tr>
-              <td>{{product.name}}</td>
-              <td>{{product.price}}</td>
-              <td>{{product.description}}</td>
-              <td>{{product.date_added}}</td>
-              <td>
-                <!-- Untuk menambah stok -->
-                <form method="POST" action="{% url 'main:increment_stock' product.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Tambah Harga</button>
-                </form>
-
-                <!-- Untuk mengurangi stok -->
-                <form method="POST" action="{% url 'main:decrement_stock' product.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Kurangi Harga</button>
-                </form>
-              </td>
-          </tr>
-      {% endfor %}
-  </table>
-  
-  <br />
-  
-  <a href="{% url 'main:create_product' %}">
-      <button>
-          Add New Product
-      </button>
-  </a>
-
-  <h5>Sesi terakhir login: {{ last_login }}</h5>
-
-  <a href="{% url 'main:logout' %}">
-      <button>
-          Logout
-      </button>
-  </a>
+    <style>
+        .custom-card {
+            width: 90%;
+            margin: 20px auto;
+        }
+    </style>
+    
+    <div class="card custom-card">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="white-space: nowrap; background-color:lightblue">Name</th>
+                        <th style="white-space: nowrap; background-color:lightblue">Price</th>
+                        <th style="white-space: nowrap; background-color:lightblue">Description</th>
+                        <th style="white-space: nowrap; background-color:lightblue">Date Added</th>
+                        <th style="white-space: nowrap; background-color:lightblue">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.description }}</td>
+                            <td>{{ product.date_added }}</td>
+                            <td class="action-column">
+                                <div class="btn-group" role="group">
+                                    <form method="POST" action="{% url 'main:increment_stock' product.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn custom-btn1">Tambah Harga</button>
+                                    </form>
+                                    <form method="POST" action="{% url 'main:decrement_stock' product.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn custom-btn2">Kurangi Harga</button>
+                                    </form>
+                                    <style>
+                                        .custom-btn1 {
+                                            background-color: green; 
+                                            color: white; 
+                                            border: none; 
+                                            border-radius: 5px; 
+                                            padding: 10px 20px; 
+                                            margin-right: 10px;
+                                        }
+                                    </style>
+                                    <style>
+                                        .custom-btn2 {
+                                            background-color: red;
+                                            color: white;
+                                            border: none;
+                                            border-radius: 5px; 
+                                            padding: 10px 20px;
+                                        }
+                                    </style>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p class="text-center">Kamu menyimpan {{items}} item pada aplikasi ini<p> 
+            <div style="text-align: center;">
+                <a href="{% url 'main:create_product' %}">
+                    <button type="button" class="btn custom-btn3">
+                        Add New Product
+                    </button>
+                    <style>
+                        .custom-btn3 {
+                            background-color: blue; 
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            padding: 10px 20px;
+                        }
+                    </style>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="container text-center mt-3">
+        <h5 style="color: white;">Sesi terakhir login: {{ last_login }}</h5>
+    </div>
 
 {% endblock content %}

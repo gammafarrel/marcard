@@ -20,17 +20,22 @@ from django.urls import reverse
 @login_required(login_url='/login')
 def show_main(request):
     products = Product.objects.filter(user=request.user)
-    #counter = 0
+    counter = 0
     
-    #for product in products:
-    #    counter += 1
+    for product in products:
+        counter += 1
+
+    if 'last_login' in request.COOKIES:
+        last_login = request.COOKIES['last_login']
+    else:
+        last_login = 'N/A'  # Set a default value or handle the case when the key doesn't exist
 
     context = {
         'name': request.user.username, 
         'class': 'PBP E', 
         'products': products,
-        #'items' : counter,
-        'last_login': request.COOKIES['last_login'],
+        'items' : counter,
+        'last_login': last_login,
     }
 
     return render(request, "main.html", context)

@@ -124,7 +124,7 @@
         -> XML by ID : pada berkas postxmlid.jpg
         -> JSON by ID : pada berkas postjsonid.jpg
 
-3. Tugas 4
+3. TUGAS 4
     1. Apa itu Django UserCreationForm?
         Django UserCreationForm adalah sebuah fork bawaan atau built-in dari framewrok web Python yaitu Django. Form ini dibuat agar ketika pemrogram membuat fitur pembuatan pengguna akan lebih mudah jika menggunakan authentication pengguna dari Django. 
 
@@ -203,3 +203,63 @@
 
             Kode ini memungkinkan pengguna hanya dapat melihat produk yang telah dia isi saja.
 
+4. TUGAS 5
+    1. Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+
+    Teerdaoat 5 Selektor yang dapat digunakan, sebagai berikut :
+    
+        Selektor Elemen: Memilih elemen HTML berdasarkan jenisnya. Berguna saat ingin menerapkan gaya pada semua elemen dengan jenis tertentu.
+
+        Selektor ID: Memilih elemen HTML berdasarkan atribut ID mereka. Berguna saat ingin menerapkan gaya pada elemen tertentu.
+
+        Selektor Kelas: Memilih elemen HTML berdasarkan atribut kelas mereka. Berguna saat ingin menerapkan gaya pada sekelompok elemen.
+
+        Selektor Universal: Memilih semua elemen HTML pada halaman. Berguna saat ingin menerapkan gaya pada semua elemen pada halaman.
+
+        Selektor Atribut: Memilih elemen HTML berdasarkan nilai atribut mereka. Berguna saat ingin menerapkan gaya pada elemen dengan nilai atribut tertentu.
+
+    2.  Jelaskan HTML5 Tag yang kamu ketahui.
+
+    <div>: Container umum untuk konten lainnya.
+    <button>: Digunakan untuk membuat tombol.
+    <br>: Membuat baris baru.
+    <header>: Menandai bagian kepala halaman web.
+    <footer>: Menandai bagian kaki halaman web.
+        
+
+    3. Jelaskan perbedaan antara margin dan padding.
+
+    Margin adalah ruang di luar elemen, menentukan jarak antara elemen dan elemen lainnya, tidak memiliki warna latar belakang, dan dapat diatur menggunakan properti margin.
+    
+    Padding adalah ruang di dalam elemen, menentukan jarak antara konten elemen dan batasnya, memiliki warna latar belakang, dan dapat diatur menggunakan properti padding.
+    
+    4. Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+
+    Tailwind CSS memfokuskan pada utility classes, memungkinkan tingkat kustomisasi tinggi, dan menghasilkan kode HTML yang lebih bersih. Cocok saat ingin desain yang unik dan fleksibilitas tinggi.
+
+    Bootstrap menyediakan komponen UI siap pakai dengan desain yang telah ditentukan, cocok untuk pengembangan cepat dan pengalaman pengguna yang konsisten. Ideal saat waktu terbatas atau ingin desain yang sudah ada.
+
+    Penggunaan Tailwind CSS dan Bootstrap tergantung pada tingkat kustomisasi yang  diinginkan dan seberapa cepat mengembangkan tampilan web.
+
+
+    5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+
+        Pada tugas ini, dilakukan perubahan desain pada halaman web.
+
+        Laman pertama yang diubah desainnya adalah laman login. Pada laman login, dibuat sebuah card agar form login terkesan melayang ditengah. Desain card justified center terhadap row sehingga pada tiap perangkat akan muncul ditengah. Selector yang digunakan pada laman ini antara lain adalah <div> dan <form>
+
+        Laman kedua yang dilakukan perubahan adalah register. Laman juga juga dilakukan pembuatan card agar form berada ditengah. Diberikan penambahan button back agar jika user tidak jadi untuk melakukan register bisa kembali ke halaman login. Selector yang digunakan pada laman ini adalah <div>, <form>, <button>
+
+        Laman ketiga diubah menjadi desain lebih kompleks adalah main. Memiliki navbar yang terdapat tombol logout, Memberikan sambutan pengguna ketika login, membuat ard untuk tabel daftar items sehingga berada ditengah, menaruh jumlah product pada bawah tabel, dan juga membuat tombol menambahkan product ditengah bawah. Selector yang digunakan pada laman ini adalah <div>, <nav>, <button>, <style>, <table>,
+
+        Laman keempat yang diubah adalah menambahkan product. Laman ini kurang lebih sama dengan laman login dan register dimana form berbentuk card agar berada ditengah. Pada laman ini juga ditambahkan tombol back agar pengguna bisa kembali ke main jika batal menambahkan product. Selector yang digunakan pada laman ini adalah <div>, <form>, <button>
+
+        Pada tiap halaman, diset style background berwarna hitam tidak terlalu pekat agar kesan aplikasi berada di dark-mode.
+
+        BONUS : Pada row terakhir pada tabel product ditambahkan style untuk mengubah warna khusus row tersebut. kode sebagai berikut
+        <style>
+            table.table tbody tr:last-child td{
+                background-color: {warna table yang diinginkan};
+                color: {warna text yang diinginkan};
+            }
+        </style>
