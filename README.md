@@ -265,6 +265,9 @@
         </style>
 
 5. TUGAS 6
+
+    link : gamma-farrel-tugas.pbp.cs.ui.ac.id
+
     1. Perbedaan Antara Asynchronous Programming dan Synchronous Programming:
 
         Synchronous Programming: Dalam pemrograman synchronous, tugas-tugas dieksekusi secara berurutan, satu demi satu, berarti bahwa satu tugas harus selesai sebelum tugas berikutnya dapat dimulai. hal ini membuat program menjadi lebih mudah dipahami, tetapi juga bisa membuat program terasa lambat dan tidak responsif jika ada tugas yang memakan waktu.
