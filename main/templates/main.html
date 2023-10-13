@@ -54,7 +54,7 @@
     
     <div class="card custom-card">
         <div class="card-body">
-            <table class="table table-bordered table-striped">
+            <table id="product_table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th style="white-space: nowrap; background-color:lightblue">Name</th>
@@ -64,72 +64,240 @@
                         <th style="white-space: nowrap; background-color:lightblue">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for product in products %}
-                        <tr>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.description }}</td>
-                            <td>{{ product.date_added }}</td>
-                            <td class="action-column">
-                                <div class="btn-group" role="group">
-                                    <form method="POST" action="{% url 'main:increment_stock' product.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn custom-btn1">Tambah Harga</button>
-                                    </form>
-                                    <form method="POST" action="{% url 'main:decrement_stock' product.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn custom-btn2">Kurangi Harga</button>
-                                    </form>
-                                    <style>
-                                        .custom-btn1 {
-                                            background-color: green; 
-                                            color: white; 
-                                            border: none; 
-                                            border-radius: 5px; 
-                                            padding: 10px 20px; 
-                                            margin-right: 10px;
-                                        }
-                                    </style>
-                                    <style>
-                                        .custom-btn2 {
-                                            background-color: red;
-                                            color: white;
-                                            border: none;
-                                            border-radius: 5px; 
-                                            padding: 10px 20px;
-                                        }
-                                    </style>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
             </table>
-            <p class="text-center">Kamu menyimpan {{items}} item pada aplikasi ini<p> 
+            <div id="product_cards" class="card-container">
+            </div>
+            <p class="text-center">Kamu menyimpan <span id="item-count">{{items}}</span> item pada aplikasi ini<p>
             <div style="text-align: center;">
-                <a href="{% url 'main:create_product' %}">
-                    <button type="button" class="btn custom-btn3">
-                        Add New Product
-                    </button>
-                    <style>
-                        .custom-btn3 {
-                            background-color: blue; 
-                            color: white;
-                            border: none;
-                            border-radius: 5px;
-                            padding: 10px 20px;
-                        }
-                    </style>
-                </a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
             </div>
         </div>
     </div>
     
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="col-form-label">Price:</label>
+                            <input type="number" class="form-control" id="price" name="price"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
     <div class="container text-center mt-3">
         <h5 style="color: white;">Sesi terakhir login: {{ last_login }}</h5>
     </div>
+
+    
+
+    <script>
+        async function getProducts() {
+        return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+        }
+
+        async function refreshProducts() {
+            const products = await getProducts();
+            const itemCountElement = document.getElementById("item-count");
+
+        itemCountElement.textContent = products.length;
+            let htmlString = `<table id="product_table" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+                    
+            
+        products.forEach((item) => {
+            htmlString += `
+                <tr>
+                    <td>${item.fields.name}</td>
+                    <td>${item.fields.price}</td>
+                    <td>${item.fields.description}</td>
+                    <td>${item.fields.date_added}</td>
+                    <td class="action-column">
+                        <div class="btn-group" role="group">
+                            <a href="increment_stock/${item.pk}/">
+                                <button type="submit" class="btn custom-btn1">+</button>
+                            </a>
+                            <a href="decrement_stock/${item.pk}/">
+                                <button type="submit" class="btn custom-btn2">-</button>
+                            </a>
+                            <a href="edit-product/${item.pk}">
+                                <button type="submit" class="btn custom-btn3">Edit</button>
+                            </a>
+                            <button class="btn custom-btn4" data-url="{% url 'main:delete_item_ajax' 123 %}" onclick="deleteProduct(this, ${item.pk})">Delete</button>
+                        </div>
+                    </td>
+                </tr>`;
+        });
+
+        htmlString += `</tbody></table>`;
+        
+        document.getElementById("product_table").innerHTML = htmlString;
+
+        const cardContainer = document.getElementById("product_cards");
+
+        cardContainer.innerHTML = "";
+
+        products.forEach((item) => {
+            // Create a card for each item
+            const card = document.createElement("div");
+            card.className = "product-card";
+
+            card.innerHTML = `
+            <h3>${item.fields.name}</h3>
+            <p><strong>Price:</strong> $${item.fields.price}</p>
+            <p><strong>Description:</strong> ${item.fields.description}</p>
+            <p><strong>Date Added:</strong> ${item.fields.date_added}</p>
+            <div class="action-buttons">
+                <div class="price-buttons">
+                    <a href="increment_stock/${item.pk}" class="btn custom-btn1">+</a>
+                    <a href="decrement_stock/${item.pk}" class="btn custom-btn2">-</a>
+                </div>
+                <div class="edit-delete-buttons">
+                    <a href="edit_product/${item.pk}" class="btn custom-btn3">-</a>
+                    <button class="btn custom-btn4" data-url="{% url 'main:delete_item_ajax' 123 %}" onclick="deleteProduct(this, ${item.pk})">Delete</button>
+                </div>
+            </div>
+            `;
+
+            cardContainer.appendChild(card);
+        });
+    }
+
+    function deleteProduct(button, id) {
+        let url = button.getAttribute('data-url').replace('123', id);
+        fetch(url, {
+            method: "DELETE",
+        }).then(refreshProducts)
+    }
+
+
+    refreshProducts();
+
+
+    function addProduct() {
+        fetch("{% url 'main:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts)
+
+        document.getElementById("form").reset()
+        return false
+    }
+
+    document.getElementById("button_add").onclick = addProduct
+    
+
+    </script>
+
+<style>
+    .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    }
+
+    .product-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card h3 {
+    font-size: 20px;
+    }
+
+    .product-card p {
+    margin: 5px 0;
+    }
+
+    .action-buttons {
+    margin-top: 10px;
+    }
+
+    .custom-btn1, .custom-btn2, .custom-btn3, .custom-btn4 {
+        text-decoration: none;
+        padding: 5px 15px;
+        margin: 5px;
+        border-radius: 5px;
+        color: #fff;
+        width: 150px;
+    }
+    
+
+    .custom-btn1 {
+    background-color: grey;
+    }
+
+    .custom-btn2 {
+    background-color: grey;
+    }
+
+    .custom-btn3 {
+    background-color: yellow;
+    color: black;
+    }
+
+    .custom-btn4 {
+    background-color: red;
+    }
+
+    @media screen and (max-width: 768px) {
+    .product-card {
+        width: calc(50% - 20px);
+    }
+    }
+
+    @media screen and (max-width: 480px) {
+    .product-card {
+        width: 100%;
+    }
+    }
+
+
+</style>
 
 {% endblock content %}

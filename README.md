@@ -263,3 +263,34 @@
                 color: {warna text yang diinginkan};
             }
         </style>
+
+5. TUGAS 6
+    1. Perbedaan Antara Asynchronous Programming dan Synchronous Programming:
+
+        Synchronous Programming: Dalam pemrograman synchronous, tugas-tugas dieksekusi secara berurutan, satu demi satu, berarti bahwa satu tugas harus selesai sebelum tugas berikutnya dapat dimulai. hal ini membuat program menjadi lebih mudah dipahami, tetapi juga bisa membuat program terasa lambat dan tidak responsif jika ada tugas yang memakan waktu.
+
+        Asynchronous Programming: Dalam pemrograman asynchronous, tugas-tugas dapat dieksekusi secara bersamaan, tanpa harus menunggu satu sama lain sehingga membuat program menjadi lebih responsif dan efisien karena tugas-tugas yang memakan waktu tidak akan menghentikan eksekusi tugas-tugas lainnya. Hal ini sangat berguna dalam situasi seperti pengunduhan file, permintaan jaringan, atau operasi I/O yang memakan waktu.
+
+    2. Paradigma Event-Driven Programming:
+        Paradigma event-driven programming adalah pendekatan pemrograman di mana program merespons event yang terjadi, seperti klik mouse, input pengguna, atau permintaan jaringan, dengan menjalankan kode tertentu yang telah ditetapkan sebelumnya untuk menangani peristiwa tersebut. Program tidak terus-menerus mengeksekusi tugas, tetapi menunggu peristiwa untuk mengaktifkan eksekusi kode tertentu.
+
+        Contoh penerapannya pada tugas ini adalah saat  menggunakan AJAX untuk mengirim permintaan HTTP asinkron melalui JavaScript. Akan ditentukan fungsi yang harus dijalankan saat permintaan berhasil atau gagal, dan juga saat menerima data dari server. Fungsi-fungsi ini akan dijalankan sebagai respons terhadap peristiwa-peristiwa yang terjadi selama permintaan HTTP berlangsung.
+
+    3. Penerapan Asynchronous Programming pada AJAX:
+        AJAX (Asynchronous JavaScript and XML) didesain dengan prinsip asynchronous programming. Saat Anda membuat permintaan AJAX, Anda bisa melanjutkan menjalankan kode JavaScript lainnya tanpa harus menunggu respon dari server. Setelah respons diterima, bisa ditentukan fungsi callback untuk mengelola data tersebut.
+    
+    4. Perbandingan Fetch API dan jQuery dalam Penerapan AJAX:
+
+        Fetch API: Merupakan API bawaan JavaScript untuk melakukan permintaan HTTP asinkron yang memiliki sintaks lebih modern dan lebih kuat daripada pendahulunya (XMLHttpRequest). Fetch API mendukung Promise yang memungkinkan Anda untuk menulis kode asynchronous dengan lebih jelas dan ekspresif. API ini juga lebih ringan dan fleksibel daripada jQuery.
+
+        jQuery: jQuery adalah perpustakaan JavaScript yang populer untuk manipulasi DOM dan komunikasi dengan server melalui AJAX. jQuery telah mendukung AJAX sejak lama dan memiliki sejumlah fungsi yang mempermudah penggunaan AJAX. Namun, jQuery cukup besar dan mungkin tidak diperlukan jika hanya memerlukan fitur-fitur AJAX.
+
+    5. Penerapan Checklist
+
+        1. Untuk memanfaatkan AJAX GET, dilakukan pembuatan fungsi untuk melakukan get_product dari data yang telah tersimpan. Lalu fungsi ini diimplementasikan pada table yang telah dibuat pada main.html sehingga bentuk pemanggilam table berubah menjadi AJAX yang nantinya terhubung pada POST
+
+        2. AJAX POST dapat dibuat dari fungsi add_product. Penambahan fungsi add_product_ajax diperlukan agar ajax dapat berjalan. Pada main.html perlu ditambahkan modal sebagai pop up untuk mengisi data dan scripts agar terjadi autorefresh ketika modal telah diisi
+
+        3. Tentunya ketika membuat function untuk AJAX baru di views, perlu dihubungkan function tersebut melalui urls agar program dapat berjalan
+
+        4. collectstatic dapat dilakukan pada cmd dengan perintah python manage.py collectstatic yang nantinya sebuah folder static akan otomatis terbuka dengan seluruh file static aplikasi
