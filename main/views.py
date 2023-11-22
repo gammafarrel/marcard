@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.http import *
 from main.forms import ProductForm
@@ -15,6 +16,7 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.serializers import serialize
 
 
 
@@ -171,3 +173,29 @@ def delete_item_ajax(request, id):
         product.delete()
         return HttpResponse(b"DELETED", status=204)
     return HttpResponseNotFound()
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        # Periksa apakah pengguna yang membuat permintaan sesuai dengan pemilik produk
+        if request.user.is_authenticated and request.user == data.get("user"):
+            new_product = Product.objects.create(
+                user=request.user,
+                name=data["name"],
+                price=int(data["price"]),
+                description=data["description"]
+            )
+            return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
+@login_required
+def get_user_products(request):
+    if request.method == 'GET':
+        user_products = Product.objects.filter(user=request.user)
+        serialized_products = serialize('json', user_products)
+        return JsonResponse({"data": serialized_products}, status=200, safe=False)
+    else:
+        return JsonResponse({"status": "error", "message": "Method not allowed"}, status=405)
